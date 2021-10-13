@@ -1,6 +1,9 @@
 ﻿using CoronaTrackerHungary.Web.Api.Models.Configurations;
+using Microsoft.Extensions.Configuration;
 using RESTFulSense.Clients;
-using System.Configuration;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CoronaTrackerHungary.Web.Api.Brokers.API
 {
