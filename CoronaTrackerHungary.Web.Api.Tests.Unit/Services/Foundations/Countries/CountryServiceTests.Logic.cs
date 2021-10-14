@@ -13,7 +13,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
     public partial class CountryServiceTests
     {
         [Fact]
-        public async Task ShouldRetrieveAllCountriesAndLogItAsync()
+        public async ValueTask ShouldRetrieveAllCountriesAndLogItAsync()
         {
             // given
             List<Country> randomCountries = CreateRandomCountries();
