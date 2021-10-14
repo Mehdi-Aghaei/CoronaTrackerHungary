@@ -1,4 +1,5 @@
 using CoronaTrackerHungary.Web.Api.Brokers.API;
+using CoronaTrackerHungary.Web.Api.Brokers.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,9 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpClient();
-
+builder.Services.AddLogging();
 builder.Services.AddControllers();
 
+builder.Services.AddTransient<ILoggingBroker,LoggingBroker>();
 builder.Services.AddScoped<IApiBroker, ApiBroker>();
 
 
