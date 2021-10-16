@@ -1,4 +1,5 @@
 ﻿using CoronaTrackerHungary.Web.Api.Brokers.API;
+using CoronaTrackerHungary.Web.Api.Brokers.DateTimes;
 using CoronaTrackerHungary.Web.Api.Brokers.Logging;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Services.Foundations.Countries;
@@ -15,15 +16,19 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
     public partial class CountryServiceTests
     {
         private readonly Mock<IApiBroker> apiBrokerMock;
+        private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly ICountryService countryService;
         public CountryServiceTests()
         {
             this.apiBrokerMock = new Mock<IApiBroker>();   
+            this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
 
-            this.countryService = new CountryService(apiBroker:this.apiBrokerMock.Object,
-                this.loggingBrokerMock.Object);
+            this.countryService = new CountryService(
+                apiBroker:this.apiBrokerMock.Object,
+                dateTimeBroker:this.dateTimeBrokerMock.Object,
+                loggingBroker:this.loggingBrokerMock.Object);
 
         }
         private static List<Country> CreateRandomCountries() =>

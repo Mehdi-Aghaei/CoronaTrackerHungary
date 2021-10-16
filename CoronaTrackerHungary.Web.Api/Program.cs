@@ -1,4 +1,5 @@
 using CoronaTrackerHungary.Web.Api.Brokers.API;
+using CoronaTrackerHungary.Web.Api.Brokers.DateTimes;
 using CoronaTrackerHungary.Web.Api.Brokers.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ builder.Services.AddLogging();
 builder.Services.AddControllers();
 
 builder.Services.AddTransient<ILoggingBroker,LoggingBroker>();
+builder.Services.AddTransient<IDateTimeBroker,DateTimeBroker>();
 builder.Services.AddScoped<IApiBroker, ApiBroker>();
 
 
