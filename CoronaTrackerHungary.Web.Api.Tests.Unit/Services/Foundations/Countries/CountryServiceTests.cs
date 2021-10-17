@@ -6,6 +6,7 @@ using CoronaTrackerHungary.Web.Api.Services.Foundations.Countries;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,13 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private static Expression<Func<Exception,bool>>SameExceptionAs(Exception expectedException)
+        {
+            return actualException =>
+                actualException.Message == expectedException.Message 
+                && actualException.InnerException.Message == expectedException.InnerException.Message;
+        }
 
         private static Filler<Country> CreateCountryFiller()
         {
