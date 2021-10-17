@@ -28,12 +28,12 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
             List<Country>actualCountries =
                 await this.countryService.RetrieveAllCountrieasAsync();
 
-
             // then
             actualCountries.Should().BeEquivalentTo(expectedCountries);
 
             this.apiBrokerMock.Verify(broker =>
-            broker.GetAllCountriesAsync,Times.Once);
+                broker.GetAllCountriesAsync,    
+                    Times.Once);
 
             this.apiBrokerMock.VerifyNoOtherCalls();
 
