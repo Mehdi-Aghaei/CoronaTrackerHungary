@@ -1,5 +1,6 @@
 ﻿using CoronaTrackerHungary.Web.Api.Models.Countries;
 using FluentAssertions;
+using Force.DeepCloner;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
             // given
             List<Country> randomCountries = CreateRandomCountries();
             List<Country> storageCountries = randomCountries;
-            List<Country> expectedCountries = storageCountries;
+            List<Country> expectedCountries = storageCountries.DeepClone();
 
             this.apiBrokerMock.Setup(broker =>
                 broker.GetAllCountriesAsync())
