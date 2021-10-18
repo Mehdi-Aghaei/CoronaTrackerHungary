@@ -7,7 +7,7 @@ using CoronaTrackerHungary.Web.Api.Models.Countries;
 
 namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 {
-    public class CountryService : ICountryService
+    public partial class CountryService : ICountryService
     {
         private readonly IApiBroker apiBroker;
         private readonly IDateTimeBroker dateTimeBroker;

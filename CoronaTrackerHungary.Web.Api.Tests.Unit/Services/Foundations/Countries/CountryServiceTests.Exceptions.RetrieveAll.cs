@@ -37,7 +37,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                     Times.Once());
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogEror(It.Is(SameExceptionAs(
+                broker.LogError(It.Is(SameExceptionAs(
                 expectedCountryServiceException))),
                     Times.Once);
 
