@@ -1,12 +1,9 @@
-﻿using CoronaTrackerHungary.Web.Api.Models.Countries;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CoronaTrackerHungary.Web.Api.Models.Countries;
 using FluentAssertions;
 using Force.DeepCloner;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
@@ -25,14 +22,14 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                 broker.GetAllCountriesAsync())
                     .ReturnsAsync(storageCountries);
             // when
-            List<Country>actualCountries =
+            List<Country> actualCountries =
                 await this.countryService.RetrieveAllCountrieasAsync();
 
             // then
             actualCountries.Should().BeEquivalentTo(expectedCountries);
 
             this.apiBrokerMock.Verify(broker =>
-                broker.GetAllCountriesAsync,    
+                broker.GetAllCountriesAsync,
                     Times.Once);
 
             this.apiBrokerMock.VerifyNoOtherCalls();

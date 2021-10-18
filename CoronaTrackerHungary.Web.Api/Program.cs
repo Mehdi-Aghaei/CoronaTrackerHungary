@@ -12,8 +12,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddLogging();
 builder.Services.AddControllers();
 
-builder.Services.AddTransient<ILoggingBroker,LoggingBroker>();
-builder.Services.AddTransient<IDateTimeBroker,DateTimeBroker>();
+builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
+builder.Services.AddTransient<IDateTimeBroker, DateTimeBroker>();
 builder.Services.AddScoped<IApiBroker, ApiBroker>();
 
 

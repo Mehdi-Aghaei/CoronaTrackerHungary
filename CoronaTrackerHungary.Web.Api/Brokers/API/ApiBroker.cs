@@ -1,9 +1,9 @@
-﻿using CoronaTrackerHungary.Web.Api.Models.Configurations;
-using Microsoft.Extensions.Configuration;
-using RESTFulSense.Clients;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using CoronaTrackerHungary.Web.Api.Models.Configurations;
+using Microsoft.Extensions.Configuration;
+using RESTFulSense.Clients;
 
 namespace CoronaTrackerHungary.Web.Api.Brokers.API
 {
@@ -12,16 +12,15 @@ namespace CoronaTrackerHungary.Web.Api.Brokers.API
         private readonly IConfiguration configuration;
         private readonly IRESTFulApiFactoryClient apiClient;
         private readonly HttpClient httpClient;
-        public ApiBroker(IConfiguration configuration,HttpClient httpClient)
+        public ApiBroker(IConfiguration configuration, HttpClient httpClient)
         {
             this.configuration = configuration;
             this.httpClient = httpClient;
             this.apiClient = InitApiClient();
         }
-        private async ValueTask<T> GetAsync<T>(string relativeUrl)=>
-       
+        private async ValueTask<T> GetAsync<T>(string relativeUrl) =>
             await this.apiClient.GetContentAsync<T>(relativeUrl);
- 
+
         private RESTFulApiFactoryClient InitApiClient()
         {
             LocalConfigurations localConfigurations = this.configuration.Get<LocalConfigurations>();

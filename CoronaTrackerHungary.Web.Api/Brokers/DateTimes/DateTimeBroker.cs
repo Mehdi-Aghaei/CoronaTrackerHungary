@@ -6,6 +6,5 @@ namespace CoronaTrackerHungary.Web.Api.Brokers.DateTimes
     {
         public DateTimeOffset GetCurrentDateTime() =>
             DateTimeOffset.UtcNow;
-
     }
 }
