@@ -11,14 +11,16 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
     public partial class CountryServiceTests
     {
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnRetrieveAllIfServiceErrorOccursAndLogItAsync()
+        public async Task ShouldThrowServiceExceptionOnRetrieveAllIfExceptionOccursAndLogIt()
         {
             // given
-            string exceptionMessage = GetRandomMessage();
-            var serviceException = new Exception(exceptionMessage);
+            var serviceException = new Exception();
+
+            var failedCountryException =
+                new FailedCountryServiceException(serviceException);
 
             var expectedCountryServiceException =
-                new CountryServiceException(serviceException);
+                new CountryServiceException(failedCountryException);
 
             this.apiBrokerMock.Setup(broker =>
                 broker.GetAllCountriesAsync())
