@@ -27,7 +27,7 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 
         private CountryServiceException CreateAndLogServiceException(Exception exception)
         {
-            var countryServiceException = 
+            var countryServiceException =
                 new CountryServiceException(exception);
             this.loggingBroker.LogError(countryServiceException);
 
