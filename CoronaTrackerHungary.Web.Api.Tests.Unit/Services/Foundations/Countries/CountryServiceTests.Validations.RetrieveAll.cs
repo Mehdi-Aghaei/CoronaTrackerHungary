@@ -15,8 +15,8 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
         public void ShouldThrowInvalidCountryExceptionIfCountryIsInvalid()
         {
             Country country = new Country();
-            var expectedInvalidCountryException = 
-                new InvalidCountryException()
+            var expectedInvalidCountryException =
+                new InvalidCountryException();
             
 
         }
