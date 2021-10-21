@@ -5,7 +5,7 @@ namespace CoronaTrackerHungary.Web.Api.Models.Countries
 {
     public class CountryInfo
     {
-        [JsonPropertyName("_id")]
+        [JsonProperty(PropertyName ="_id")]
         public int Id { get; set; }
 
         [JsonProperty("iso3")]

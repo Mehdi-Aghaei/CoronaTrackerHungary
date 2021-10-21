@@ -29,7 +29,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
             actualCountries.Should().BeEquivalentTo(expectedCountries);
 
             this.apiBrokerMock.Verify(broker =>
-                broker.GetAllCountriesAsync,
+                broker.GetAllCountriesAsync(),
                     Times.Once);
 
             this.apiBrokerMock.VerifyNoOtherCalls();
