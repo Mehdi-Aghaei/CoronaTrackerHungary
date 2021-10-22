@@ -25,10 +25,10 @@ namespace CoronaTrackerHungary.Web.Api.Models.Countries
         [JsonProperty("todayDeaths")]
         public int TodayDeaths { get; set; }
 
-        [JsonProperty("recoverd")]
+        [JsonProperty("recovered")]
         public int Recoverd { get; set; }
 
-        [JsonProperty("todayRecoverd")]
+        [JsonProperty("todayRecovered")]
         public int TodayRecoverd { get; set; }
 
         [JsonProperty("population")]
