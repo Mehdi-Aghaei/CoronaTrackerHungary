@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using CoronaTrackerHungary.Web.Api.Brokers.API;
 using CoronaTrackerHungary.Web.Api.Brokers.DateTimes;
 using CoronaTrackerHungary.Web.Api.Brokers.Logging;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Services.Foundations.Countries;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 
@@ -32,6 +34,10 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
         }
         private static List<Country> CreateRandomCountries() =>
             CreateCountryFiller().Create(count: GetRandomNumber()).ToList();
+
+        private static SqlException GetSqlException() =>
+             (SqlException)FormatterServices.GetUninitializedObject(typeof
+             (SqlException));
         private static string GetRandomMessage() =>
            new MnemonicString(wordCount: GetRandomNumber()).GetValue();
 
