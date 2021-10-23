@@ -5,9 +5,9 @@ namespace CoronaTrackerHungary.Web.Api.Brokers.Logging
 {
     public class LoggingBroker : ILoggingBroker
     {
-        private readonly ILogger logger;
+        private readonly ILogger<LoggingBroker> logger;
 
-        public LoggingBroker(ILogger logger) => this.logger = logger;
+        public LoggingBroker(ILogger<LoggingBroker> logger) => this.logger = logger;
 
         public void LogDebug(string message) => this.logger.LogDebug(message);
         public void LogInformation(string message) => this.logger.LogInformation(message);
