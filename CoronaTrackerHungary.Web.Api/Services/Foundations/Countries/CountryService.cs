@@ -19,11 +19,6 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             this.dateTimeBroker = dateTimeBroker;
         }
         public ValueTask<List<Country>> RetrieveAllCountrieasAsync() =>
-           TryCatch(async () =>
-           {
-               List<Country> allCountries = await this.apiBroker.GetAllCountriesAsync();
-
-               return allCountries;
-           });
+        TryCatch(async () => await this.apiBroker.GetAllCountriesAsync());
     }
 }
