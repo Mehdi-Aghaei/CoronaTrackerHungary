@@ -17,7 +17,7 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             {
                 return await returningCountriesFunction();
             }
-            catch(SqlException sqlException) 
+            catch (SqlException sqlException)
             {
                 throw CreateAndLogCriticalDependencyException(sqlException);
             }
@@ -31,7 +31,7 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
         }
         private CountryDependencyException CreateAndLogCriticalDependencyException(Exception exception)
         {
-            var countryDependencyException = 
+            var countryDependencyException =
                 new CountryDependencyException(exception);
             this.loggingBroker.LogCritical(countryDependencyException);
 

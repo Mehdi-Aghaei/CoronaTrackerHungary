@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
 using System.Threading.Tasks;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Models.Countries.Exceptions;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Xunit;
 
@@ -29,11 +29,11 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                 this.countryService.RetrieveAllCountrieasAsync();
 
             // then
-            await Assert.ThrowsAsync<CountryDependencyException>(() => 
+            await Assert.ThrowsAsync<CountryDependencyException>(() =>
                 retrieveAllCountriesTask.AsTask());
 
-            this.apiBrokerMock.Verify(broker => 
-                broker.GetAllCountriesAsync(), 
+            this.apiBrokerMock.Verify(broker =>
+                broker.GetAllCountriesAsync(),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
