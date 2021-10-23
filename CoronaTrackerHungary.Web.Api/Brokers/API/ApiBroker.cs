@@ -11,7 +11,7 @@ namespace CoronaTrackerHungary.Web.Api.Brokers.API
     {
         private readonly IRESTFulApiFactoryClient apiClient;
         private readonly HttpClient httpClient;
-        public ApiBroker(HttpClient httpClient,IConfiguration configuration)
+        public ApiBroker(HttpClient httpClient, IConfiguration configuration)
         {
             this.httpClient = httpClient;
             this.apiClient = GetApiClient(configuration);
@@ -21,7 +21,7 @@ namespace CoronaTrackerHungary.Web.Api.Brokers.API
 
         private RESTFulApiFactoryClient GetApiClient(IConfiguration configuration)
         {
-            LocalConfigurations localConfigurations = 
+            LocalConfigurations localConfigurations =
                 configuration.Get<LocalConfigurations>();
 
             string apiBaseUrl = localConfigurations.ApiConfigurations.Url;

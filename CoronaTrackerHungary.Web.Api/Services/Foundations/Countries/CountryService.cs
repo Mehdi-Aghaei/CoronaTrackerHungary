@@ -10,13 +10,13 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
     public partial class CountryService : ICountryService
     {
         private readonly IApiBroker apiBroker;
-        private readonly IDateTimeBroker dateTimeBroker;
         private readonly ILoggingBroker loggingBroker;
+        private readonly IDateTimeBroker dateTimeBroker;
         public CountryService(IApiBroker apiBroker, ILoggingBroker loggingBroker, IDateTimeBroker dateTimeBroker)
         {
-            this.dateTimeBroker = dateTimeBroker;
             this.apiBroker = apiBroker;
             this.loggingBroker = loggingBroker;
+            this.dateTimeBroker = dateTimeBroker;
         }
         public ValueTask<List<Country>> RetrieveAllCountrieasAsync() =>
            TryCatch(async () =>
