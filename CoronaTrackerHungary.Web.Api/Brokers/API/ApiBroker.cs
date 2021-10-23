@@ -9,24 +9,24 @@ namespace CoronaTrackerHungary.Web.Api.Brokers.API
 {
     public partial class ApiBroker : IApiBroker
     {
-        private readonly IConfiguration configuration;
         private readonly IRESTFulApiFactoryClient apiClient;
         private readonly HttpClient httpClient;
-        public ApiBroker(IConfiguration configuration, HttpClient httpClient)
+        public ApiBroker(HttpClient httpClient,IConfiguration configuration)
         {
-            this.configuration = configuration;
             this.httpClient = httpClient;
-            this.apiClient = InitApiClient();
+            this.apiClient = GetApiClient(configuration);
         }
         private async ValueTask<T> GetAsync<T>(string relativeUrl) =>
             await this.apiClient.GetContentAsync<T>(relativeUrl);
 
-        private RESTFulApiFactoryClient InitApiClient()
+        private RESTFulApiFactoryClient GetApiClient(IConfiguration configuration)
         {
-            LocalConfigurations localConfigurations = this.configuration.Get<LocalConfigurations>();
-            string apiUrl = localConfigurations.ApiConfigurations.Url;
+            LocalConfigurations localConfigurations = 
+                configuration.Get<LocalConfigurations>();
 
-            this.httpClient.BaseAddress = new Uri(apiUrl);
+            string apiBaseUrl = localConfigurations.ApiConfigurations.Url;
+            this.httpClient.BaseAddress = new Uri(apiBaseUrl);
+
             return new RESTFulApiFactoryClient(httpClient);
         }
     }
