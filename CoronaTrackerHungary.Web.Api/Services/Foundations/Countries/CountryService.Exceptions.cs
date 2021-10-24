@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Models.Countries.Exceptions;
-using Microsoft.Data.SqlClient;
 
 namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 {
@@ -17,10 +16,6 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             {
                 return await returningCountriesFunction();
             }
-            catch (SqlException sqlException)
-            {
-                throw CreateAndLogCriticalDependencyException(sqlException);
-            }
             catch (Exception exception)
             {
                 var failedCountryServiceException =
@@ -29,14 +24,7 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
                 throw CreateAndLogServiceException(failedCountryServiceException);
             }
         }
-        private CountryDependencyException CreateAndLogCriticalDependencyException(Exception exception)
-        {
-            var countryDependencyException =
-                new CountryDependencyException(exception);
-            this.loggingBroker.LogCritical(countryDependencyException);
 
-            return countryDependencyException;
-        }
         private CountryServiceException CreateAndLogServiceException(Exception exception)
         {
             var countryServiceException =
@@ -45,6 +33,5 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 
             return countryServiceException;
         }
-
     }
 }

@@ -31,7 +31,7 @@ namespace CoronaTrackerHungary.Web.Api.Controllers
 
                 return Ok(retrievedCountries);
             }
-            catch(CountryDependencyException countryDependencyException)
+            catch (CountryDependencyException countryDependencyException)
             {
                 return InternalServerError(countryDependencyException);
             }

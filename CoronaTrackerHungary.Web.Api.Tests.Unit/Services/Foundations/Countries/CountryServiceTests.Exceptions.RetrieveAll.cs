@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Models.Countries.Exceptions;
-using Microsoft.Data.SqlClient;
 using Moq;
 using Xunit;
 
@@ -11,41 +10,6 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 {
     public partial class CountryServiceTests
     {
-        [Fact]
-        public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveAllWhenSqlExceptionOccursAndLogItAsync()
-        {
-            // given
-            SqlException sqlException = GetSqlException();
-
-            var expectedPostDependencyException =
-                new CountryDependencyException(sqlException);
-
-            this.apiBrokerMock.Setup(broker =>
-                broker.GetAllCountriesAsync())
-                .ThrowsAsync(sqlException);
-
-            // when
-            ValueTask<List<Country>> retrieveAllCountriesTask =
-                this.countryService.RetrieveAllCountrieasAsync();
-
-            // then
-            await Assert.ThrowsAsync<CountryDependencyException>(() =>
-                retrieveAllCountriesTask.AsTask());
-
-            this.apiBrokerMock.Verify(broker =>
-                broker.GetAllCountriesAsync(),
-                    Times.Once);
-
-            this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(It.Is(SameExceptionAs(
-                    expectedPostDependencyException))),
-                        Times.Once);
-
-            this.apiBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
-        }
-
         [Fact]
         public async Task ShouldThrowServiceExceptionOnRetrieveAllIfExceptionOccursAndLogItAsync()
         {
@@ -81,7 +45,6 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 
             this.apiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
