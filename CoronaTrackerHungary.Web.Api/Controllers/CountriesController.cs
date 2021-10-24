@@ -4,6 +4,7 @@ using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Models.Countries.Exceptions;
 using CoronaTrackerHungary.Web.Api.Services.Foundations.Countries;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using RESTFulSense.Controllers;
 
 namespace CoronaTrackerHungary.Web.Api.Controllers
@@ -20,6 +21,7 @@ namespace CoronaTrackerHungary.Web.Api.Controllers
         }
 
         [HttpGet]
+        [EnableQuery]
         public async ValueTask<ActionResult<List<Country>>> GetAllCountriesAsync()
         {
             try

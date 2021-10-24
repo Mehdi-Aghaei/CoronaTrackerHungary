@@ -3,6 +3,7 @@ using CoronaTrackerHungary.Web.Api.Brokers.DateTimes;
 using CoronaTrackerHungary.Web.Api.Brokers.Logging;
 using CoronaTrackerHungary.Web.Api.Services.Foundations.Countries;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.OData;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddLogging();
 builder.Services.AddHttpClient();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddOData(options => options.Select().Filter().OrderBy());
 
 builder.Services.AddTransient<IApiBroker, ApiBroker>();
 builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
