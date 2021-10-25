@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoronaTrackerHungary.Web.Api", "CoronaTrackerHungary.Web.Api\CoronaTrackerHungary.Web.Api.csproj", "{B5E52616-4FA6-4FE3-ADAC-45E1AE176D79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoronaTrackerHungary.Web.Api.Tests.Unit", "CoronaTrackerHungary.Web.Api.Tests.Unit\CoronaTrackerHungary.Web.Api.Tests.Unit.csproj", "{EC9B4B6E-FBD7-4DD4-A8F3-C31E1E689FE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoronaTrackerHungary.Web.Api.Tests.Unit", "CoronaTrackerHungary.Web.Api.Tests.Unit\CoronaTrackerHungary.Web.Api.Tests.Unit.csproj", "{EC9B4B6E-FBD7-4DD4-A8F3-C31E1E689FE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoronaTrackerHungary.Infrastructure.Build", "CoronaTrackerHungary.Infrastructure.Build\CoronaTrackerHungary.Infrastructure.Build.csproj", "{40547D63-FC21-442A-A9B2-CEDC370A3B82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EC9B4B6E-FBD7-4DD4-A8F3-C31E1E689FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC9B4B6E-FBD7-4DD4-A8F3-C31E1E689FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC9B4B6E-FBD7-4DD4-A8F3-C31E1E689FE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40547D63-FC21-442A-A9B2-CEDC370A3B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40547D63-FC21-442A-A9B2-CEDC370A3B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40547D63-FC21-442A-A9B2-CEDC370A3B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40547D63-FC21-442A-A9B2-CEDC370A3B82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
