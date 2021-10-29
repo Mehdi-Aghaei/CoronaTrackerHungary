@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Models.Countries.Exceptions;
@@ -20,16 +21,15 @@ namespace CoronaTrackerHungary.Web.Api.Controllers
             this.countryService = countryService;
         }
 
-        [HttpGet]
         [EnableQuery]
-        public async ValueTask<ActionResult<List<Country>>> GetAllCountriesAsync()
+        public async ValueTask<ActionResult<Country>> Get()
         {
             try
             {
                 List<Country> retrievedCountries =
                     await this.countryService.RetrieveAllCountrieasAsync();
 
-                return Ok(retrievedCountries);
+                return Ok(retrievedCountries.AsQueryable());
             }
             catch (CountryDependencyException countryDependencyException)
             {

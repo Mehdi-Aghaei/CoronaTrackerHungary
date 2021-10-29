@@ -18,7 +18,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddControllers().AddOData(options =>
     options.Select().Filter().OrderBy()
-        .AddRouteComponents("api",GetEdmModel()));
+        .AddRouteComponents("api", GetEdmModel()));
 
 builder.Services.AddTransient<IApiBroker, ApiBroker>();
 builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
