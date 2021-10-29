@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace CoronaTrackerHungary.Web.Api.Models.Countries
 {
     public class Country
     {
         [JsonProperty("country")]
+        [Key]
         public string CountryName { get; set; }
 
         [JsonProperty("countryInfo")]
