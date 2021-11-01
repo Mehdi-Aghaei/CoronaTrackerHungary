@@ -18,6 +18,34 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             {
                 return await returningCountriesFunction();
             }
+            catch (HttpRequestException httpRequestException)
+            {
+                var failedCountryDependencyException =
+                    new FailedCountryDependencyException(httpRequestException);
+
+                throw CreateAndLogCriticalDependencyException(failedCountryDependencyException);
+            }
+            catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
+            {
+                var failedCountryDependencyException =
+                    new FailedCountryDependencyException(httpResponseUrlNotFoundException);
+
+                throw CreateAndLogCriticalDependencyException(failedCountryDependencyException);
+            }
+            catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
+            {
+                var failedCountryDependencyExcpetion =
+                    new FailedCountryDependencyException(httpResponseUnauthorizedException);
+
+                throw CreateAndLogCriticalDependencyException(failedCountryDependencyExcpetion);
+            }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedCountryException =
+                    new FailedCountryDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyException(failedCountryException);
+            }
             catch (Exception serviceException)
             {
                 var failedCountryServiceException =
