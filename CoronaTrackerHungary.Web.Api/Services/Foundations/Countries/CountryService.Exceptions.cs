@@ -16,10 +16,10 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             {
                 return await returningCountriesFunction();
             }
-            catch (Exception exception)
+            catch (Exception serviceException)
             {
                 var failedCountryServiceException =
-                    new FailedCountryServiceException(exception);
+                    new FailedCountryServiceException(serviceException);
 
                 throw CreateAndLogServiceException(failedCountryServiceException);
             }

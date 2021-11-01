@@ -19,3 +19,6 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
         TryCatch(async () => await this.apiBroker.GetAllCountriesAsync());
     }
 }
+
+
+
