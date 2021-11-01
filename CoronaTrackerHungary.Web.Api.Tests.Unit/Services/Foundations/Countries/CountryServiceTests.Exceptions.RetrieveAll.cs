@@ -10,6 +10,45 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 {
     public partial class CountryServiceTests
     {
+        [Theory]
+        [MemberData(nameof(CriticalDependencyException))]
+        public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveAllIfCriticalDependencyExceptionOccursAndLogItAsync(
+            Exception criticalDependencyException)
+        {
+            // given
+            var failedCountryDependencyException =
+                new FailedCountryDependencyException(
+                    criticalDependencyException);
+
+            var expectedCountryDependencyException =
+                new CountryDependencyException(
+                    failedCountryDependencyException);
+
+            this.apiBrokerMock.Setup(broker =>
+                broker.GetAllCountriesAsync())
+                .ThrowsAsync(criticalDependencyException);
+
+            // when
+            ValueTask<List<Country>> retrieveAllCountriesTask =
+                this.countryService.RetrieveAllCountrieasAsync();
+
+            // then
+            await Assert.ThrowsAsync<FailedCountryDependencyException>(() =>
+                retrieveAllCountriesTask.AsTask());
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.GetAllCountriesAsync(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogCritical(It.Is(SameExceptionAs(
+                    expectedCountryDependencyException))),
+                        Times.Once);
+
+            this.apiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
         [Fact]
         public async Task ShouldThrowServiceExceptionOnRetrieveAllIfExceptionOccursAndLogItAsync()
         {
