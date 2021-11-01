@@ -15,18 +15,18 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
         {
             // given
             List<Country> randomCountries = CreateRandomCountries();
-            List<Country> storageCountries = randomCountries;
-            List<Country> expectedCountries = storageCountries.DeepClone();
+            List<Country> apiCountries = randomCountries;
+            List<Country> expectedCountries = apiCountries.DeepClone();
 
             this.apiBrokerMock.Setup(broker =>
                 broker.GetAllCountriesAsync())
-                    .ReturnsAsync(storageCountries);
+                    .ReturnsAsync(apiCountries);
             // when
-            List<Country> actualCountries =
+            List<Country> retrievedCountries =
                 await this.countryService.RetrieveAllCountrieasAsync();
 
             // then
-            actualCountries.Should().BeEquivalentTo(expectedCountries);
+            retrievedCountries.Should().BeEquivalentTo(expectedCountries);
 
             this.apiBrokerMock.Verify(broker =>
                 broker.GetAllCountriesAsync(),
