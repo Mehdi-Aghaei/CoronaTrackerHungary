@@ -33,7 +33,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                 this.countryService.RetrieveAllCountrieasAsync();
 
             // then
-            await Assert.ThrowsAsync<FailedCountryDependencyException>(() =>
+            await Assert.ThrowsAsync<CountryDependencyException>(() =>
                 retrieveAllCountriesTask.AsTask());
 
             this.apiBrokerMock.Verify(broker =>
