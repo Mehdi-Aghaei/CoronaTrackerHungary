@@ -1,17 +1,102 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Models.Countries.Exceptions;
 using Moq;
+using RESTFulSense.Exceptions;
 using Xunit;
 
 namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 {
     public partial class CountryServiceTests
     {
+        [Theory]
+        [MemberData(nameof(CriticalDependencyException))]
+        public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveAllIfCriticalDependencyExceptionOccursAndLogItAsync(
+            Exception criticalDependencyException)
+        {
+            // given
+            var failedCountryDependencyException =
+                new FailedCountryDependencyException(
+                    criticalDependencyException);
+
+            var expectedCountryDependencyException =
+                new CountryDependencyException(
+                    failedCountryDependencyException);
+
+            this.apiBrokerMock.Setup(broker =>
+                broker.GetAllCountriesAsync())
+                .ThrowsAsync(criticalDependencyException);
+
+            // when
+            ValueTask<List<Country>> retrieveAllCountriesTask =
+                this.countryService.RetrieveAllCountrieasAsync();
+
+            // then
+            await Assert.ThrowsAsync<CountryDependencyException>(() =>
+                retrieveAllCountriesTask.AsTask());
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.GetAllCountriesAsync(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogCritical(It.Is(SameExceptionAs(
+                    expectedCountryDependencyException))),
+                        Times.Once);
+
+            this.apiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnRetrieveAllIfExceptionOccursAndLogItAsync()
+        public async Task ShouldThrowCountryDependencyExceptionOnRetrieveAllIfDependencyApiErrorOccursAndLogItAsync()
+        {
+            // given 
+            var randomExceptionMessage = GetRandomString();
+            var responseMessage = new HttpResponseMessage();
+
+            var httpResponseException =
+                new HttpResponseException(
+                    httpResponseMessage: responseMessage,
+                    message: randomExceptionMessage);
+
+            var failedCountryDependencyException =
+                new FailedCountryDependencyException(httpResponseException);
+
+            var expectedCountryDependencyException =
+                new CountryDependencyException(failedCountryDependencyException);
+
+            this.apiBrokerMock.Setup(broker =>
+                broker.GetAllCountriesAsync())
+                .ThrowsAsync(httpResponseException);
+
+            // when
+            ValueTask<List<Country>> retrieveAllCountriesTask =
+                this.countryService.RetrieveAllCountrieasAsync();
+
+            // then
+            await Assert.ThrowsAsync<CountryDependencyException>(() =>
+                retrieveAllCountriesTask.AsTask());
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.GetAllCountriesAsync(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedCountryDependencyException))),
+                        Times.Once);
+
+            this.apiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnRetrieveAllIfServiceErrorOccursAndLogItAsync()
         {
             // given
             var serviceException = new Exception();
