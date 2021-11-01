@@ -39,6 +39,13 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 
                 throw CreateAndLogCriticalDependencyException(failedCountryDependencyExcpetion);
             }
+            catch(HttpResponseException httpResponseException)
+            {
+                var failedCountryException =
+                    new FailedCountryDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyException(failedCountryException);
+            }
             catch (Exception serviceException)
             {
                 var failedCountryServiceException =
@@ -58,10 +65,21 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             return countryDependencyException;
         } 
 
+        private CountryDependencyException CreateAndLogDependencyException(Exception exception)
+        {
+            var countryDependencyException =
+                new CountryDependencyException(exception);
+
+            this.loggingBroker.LogError(countryDependencyException);
+
+            return countryDependencyException;
+        }
+
         private CountryServiceException CreateAndLogServiceException(Exception exception)
         {
             var countryServiceException =
                 new CountryServiceException(exception);
+
             this.loggingBroker.LogError(countryServiceException);
 
             return countryServiceException;
