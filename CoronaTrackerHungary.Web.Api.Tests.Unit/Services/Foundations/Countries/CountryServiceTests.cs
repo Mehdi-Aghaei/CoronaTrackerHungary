@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
 using CoronaTrackerHungary.Web.Api.Brokers.API;
 using CoronaTrackerHungary.Web.Api.Brokers.Logging;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Services.Foundations.Countries;
 using Moq;
+using RESTFulSense.Exceptions;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 {
@@ -25,6 +29,36 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                 apiBroker: this.apiBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
+
+        public static TheoryData CriticalDependencyException()
+        {
+            string exceptionMessage = GetRandomString();
+            var responseMessage = new HttpResponseMessage();
+
+            var httpRequestException =
+                new HttpRequestException();
+
+            var httpResponseUrlNotFoundException =
+                new HttpResponseUrlNotFoundException(
+                    responseMessage: responseMessage,
+                    message: exceptionMessage);
+
+            var httpResponseUnAuthorizedException =
+                new HttpResponseUnauthorizedException(
+                    responseMessage: responseMessage,
+                    message: exceptionMessage);
+
+            return new TheoryData<Exception>
+            {
+                httpRequestException,
+                httpResponseUrlNotFoundException,
+                httpResponseUnAuthorizedException
+            };
+        }
+
+        private static string GetRandomString() =>
+            new MnemonicString().GetValue();
+
         private static List<Country> CreateRandomCountries() =>
             CreateCountryFiller().Create(count: GetRandomNumber()).ToList();
 
@@ -37,8 +71,9 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
         private static Expression<Func<Exception, bool>> SameExceptionAs(Exception expectedException)
         {
             return actualException =>
-                actualException.Message == expectedException.Message
-                && actualException.InnerException.Message == expectedException.InnerException.Message;
+                actualException.Message == expectedException.Message &&
+                actualException.InnerException.Message == expectedException.InnerException.Message &&
+                (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
 
         private static Filler<Country> CreateCountryFiller()
