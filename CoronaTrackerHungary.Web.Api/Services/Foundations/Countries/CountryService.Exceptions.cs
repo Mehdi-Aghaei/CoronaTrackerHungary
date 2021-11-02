@@ -57,13 +57,13 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 
         private CountryDependencyException CreateAndLogCriticalDependencyException(Exception exception)
         {
-            var countryDependencyException = 
+            var countryDependencyException =
                 new CountryDependencyException(exception);
 
             this.loggingBroker.LogCritical(countryDependencyException);
 
             return countryDependencyException;
-        } 
+        }
 
         private CountryDependencyException CreateAndLogDependencyException(Exception exception)
         {

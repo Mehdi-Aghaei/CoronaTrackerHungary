@@ -22,11 +22,8 @@ builder.Services.AddControllers().AddOData(options =>
 
 builder.Services.AddTransient<IApiBroker, ApiBroker>();
 builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
-
-
 builder.Services.AddTransient<ICountryService, CountryService>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
