@@ -1,5 +1,6 @@
 using CoronaTrackerHungary.Web.Api.Brokers.APIs;
 using CoronaTrackerHungary.Web.Api.Brokers.Loggings;
+using CoronaTrackerHungary.Web.Api.Brokers.Storages;
 using CoronaTrackerHungary.Web.Api.Services.Foundations.Countries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.OData;
@@ -12,8 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddLogging();
 builder.Services.AddHttpClient();
 builder.Services.AddControllers().AddOData(options => options.Select().Filter().OrderBy());
+builder.Services.AddDbContext<StorageBroker>();
 
 builder.Services.AddTransient<IApiBroker, ApiBroker>();
+builder.Services.AddTransient<IStorageBroker, StorageBroker>();
 builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
 
 

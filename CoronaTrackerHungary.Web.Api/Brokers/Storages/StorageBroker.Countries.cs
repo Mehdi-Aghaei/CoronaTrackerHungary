@@ -24,10 +24,10 @@ namespace CoronaTrackerHungary.Web.Api.Brokers.Storages
             return countryEntityEntry.Entity;
         }
 
-        IQueryable<Country> SelectAllCountries() =>
+        public IQueryable<Country> SelectAllCountries() =>
             throw new NotImplementedException();
 
-        ValueTask<Country> UpdateCountryAsync(Country country) =>
+        public ValueTask<Country> UpdateCountryAsync(Country country) =>
             throw new NotImplementedException();
     }
 }
