@@ -14,15 +14,13 @@ builder.Services.AddLogging();
 builder.Services.AddHttpClient();
 builder.Services.AddControllers().AddOData(options => options.Select().Filter().OrderBy());
 builder.Services.AddDbContext<StorageBroker>();
-
+// BROKERS
 builder.Services.AddTransient<IApiBroker, ApiBroker>();
 builder.Services.AddTransient<IStorageBroker, StorageBroker>();
 builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
-
-
+// SERVICES
 builder.Services.AddTransient<ICountryService, CountryService>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

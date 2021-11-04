@@ -18,12 +18,12 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             {
                 return await returningCountriesFunction();
             }
-            catch(HttpRequestException httpRequestException)
+            catch (HttpRequestException httpRequestException)
             {
                 var failedCountryDependencyException =
                     new FailedCountryDependencyException(httpRequestException);
 
-               throw CreateAndLogCriticalDependencyException(failedCountryDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedCountryDependencyException);
             }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
@@ -32,14 +32,14 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 
                 throw CreateAndLogCriticalDependencyException(failedCountryDependencyException);
             }
-            catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException )
+            catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
             {
-                var failedCountryDependencyExcpetion = 
+                var failedCountryDependencyExcpetion =
                     new FailedCountryDependencyException(httpResponseUnauthorizedException);
 
                 throw CreateAndLogCriticalDependencyException(failedCountryDependencyExcpetion);
             }
-            catch(HttpResponseException httpResponseException)
+            catch (HttpResponseException httpResponseException)
             {
                 var failedCountryException =
                     new FailedCountryDependencyException(httpResponseException);
@@ -57,13 +57,13 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 
         private CountryDependencyException CreateAndLogCriticalDependencyException(Exception exception)
         {
-            var countryDependencyException = 
+            var countryDependencyException =
                 new CountryDependencyException(exception);
 
             this.loggingBroker.LogCritical(countryDependencyException);
 
             return countryDependencyException;
-        } 
+        }
 
         private CountryDependencyException CreateAndLogDependencyException(Exception exception)
         {
