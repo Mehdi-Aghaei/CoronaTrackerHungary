@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CoronaTrackerHungary.Web.Api.Brokers.API;
-using CoronaTrackerHungary.Web.Api.Brokers.Logging;
+using CoronaTrackerHungary.Web.Api.Brokers.APIs;
+using CoronaTrackerHungary.Web.Api.Brokers.Loggings;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 
 namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
