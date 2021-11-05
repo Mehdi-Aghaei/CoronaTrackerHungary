@@ -51,27 +51,21 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
-        [Fact]
-        public async Task ShouldThrowCountryDependencyExceptionOnRetrieveAllIfDependencyApiErrorOccursAndLogItAsync()
+        [Theory]
+        [MemberData(nameof(DependencyApiException))]
+        public async Task ShouldThrowDependencyExceptionOnRetrieveAllIfDependencyApiErrorOccursAndLogItAsync(
+            Exception dependencyApiException)
         {
             // given 
-            var randomExceptionMessage = GetRandomString();
-            var responseMessage = new HttpResponseMessage();
-
-            var httpResponseException =
-                new HttpResponseException(
-                    httpResponseMessage: responseMessage,
-                    message: randomExceptionMessage);
-
             var failedCountryDependencyException =
-                new FailedCountryDependencyException(httpResponseException);
+                new FailedCountryDependencyException(dependencyApiException);
 
             var expectedCountryDependencyException =
                 new CountryDependencyException(failedCountryDependencyException);
 
             this.apiBrokerMock.Setup(broker =>
                 broker.GetAllCountriesAsync())
-                .ThrowsAsync(httpResponseException);
+                .ThrowsAsync(dependencyApiException);
 
             // when
             ValueTask<List<Country>> retrieveAllCountriesTask =
