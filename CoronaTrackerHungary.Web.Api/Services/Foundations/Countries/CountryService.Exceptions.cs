@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Models.Countries.Exceptions;
 using RESTFulSense.Exceptions;
+using Xeptions;
 
 namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 {
@@ -39,6 +40,14 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
 
                 throw CreateAndLogCriticalDependencyException(failedCountryDependencyExcpetion);
             }
+            catch (HttpResponseInternalServerErrorException httpResponseInternalServerErrorException)
+            {
+                var failedCountryDependencyException =
+                    new FailedCountryDependencyException(httpResponseInternalServerErrorException);
+
+                throw CreateAndLogDependencyException(failedCountryDependencyException);
+
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedCountryDependencyException =
@@ -55,7 +64,7 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             }
         }
 
-        private CountryDependencyException CreateAndLogCriticalDependencyException(Exception exception)
+        private CountryDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
         {
             var countryDependencyException =
                 new CountryDependencyException(exception);
@@ -65,7 +74,7 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             return countryDependencyException;
         }
 
-        private CountryDependencyException CreateAndLogDependencyException(Exception exception)
+        private CountryDependencyException CreateAndLogDependencyException(Xeption exception)
         {
             var countryDependencyException =
                 new CountryDependencyException(exception);
