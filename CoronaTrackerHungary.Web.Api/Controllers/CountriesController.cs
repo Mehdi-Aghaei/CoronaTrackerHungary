@@ -15,10 +15,8 @@ namespace CoronaTrackerHungary.Web.Api.Controllers
     {
         private readonly ICountryService countryService;
 
-        public CountriesController(ICountryService countryService)
-        {
+        public CountriesController(ICountryService countryService) =>
             this.countryService = countryService;
-        }
 
         [HttpGet]
         [EnableQuery]
@@ -27,7 +25,7 @@ namespace CoronaTrackerHungary.Web.Api.Controllers
             try
             {
                 List<Country> retrievedCountries =
-                    await this.countryService.RetrieveAllCountrieasAsync();
+                    await this.countryService.RetrieveAllCountriesAsync();
 
                 return Ok(retrievedCountries);
             }

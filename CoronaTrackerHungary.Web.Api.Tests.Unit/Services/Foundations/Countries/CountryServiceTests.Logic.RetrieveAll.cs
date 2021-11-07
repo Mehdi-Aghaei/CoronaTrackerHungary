@@ -23,7 +23,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                     .ReturnsAsync(apiCountries);
             // when
             List<Country> retrievedCountries =
-                await this.countryService.RetrieveAllCountrieasAsync();
+                await this.countryService.RetrieveAllCountriesAsync();
 
             // then
             retrievedCountries.Should().BeEquivalentTo(expectedCountries);
@@ -34,8 +34,6 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 
             this.apiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
-
         }
-
     }
 }

@@ -10,6 +10,5 @@ namespace CoronaTrackerHungary.Web.Api.Brokers.Loggings
         void LogWarning(string message);
         void LogError(Exception exception);
         void LogCritical(Exception exception);
-
     }
 }

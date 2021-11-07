@@ -10,12 +10,14 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
     {
         private readonly IApiBroker apiBroker;
         private readonly ILoggingBroker loggingBroker;
+
         public CountryService(IApiBroker apiBroker, ILoggingBroker loggingBroker)
         {
             this.apiBroker = apiBroker;
             this.loggingBroker = loggingBroker;
         }
-        public ValueTask<List<Country>> RetrieveAllCountrieasAsync() =>
+
+        public ValueTask<List<Country>> RetrieveAllCountriesAsync() =>
         TryCatch(async () => await this.apiBroker.GetAllCountriesAsync());
     }
 }

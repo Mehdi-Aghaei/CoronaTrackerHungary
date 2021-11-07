@@ -12,7 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddLogging();
 builder.Services.AddHttpClient();
-builder.Services.AddControllers().AddOData(options => options.Select().Filter().OrderBy());
+builder.Services.AddControllers()
+    .AddOData(options => options.Select().Filter().OrderBy());
+
 builder.Services.AddDbContext<StorageBroker>();
 // BROKERS
 builder.Services.AddTransient<IApiBroker, ApiBroker>();
@@ -26,7 +28,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

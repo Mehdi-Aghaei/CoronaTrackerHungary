@@ -20,6 +20,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
         private readonly Mock<IApiBroker> apiBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly ICountryService countryService;
+
         public CountryServiceTests()
         {
             this.apiBrokerMock = new Mock<IApiBroker>();
@@ -30,7 +31,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                 loggingBroker: this.loggingBrokerMock.Object);
         }
 
-        public static TheoryData CriticalDependencyException()
+        public static TheoryData CriticalDependencyExceptions()
         {
             string exceptionMessage = GetRandomString();
             var responseMessage = new HttpResponseMessage();
@@ -56,7 +57,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
             };
         }
 
-        public static TheoryData DependencyApiException()
+        public static TheoryData DependencyApiExceptions()
         {
             string exceptionMessage = GetRandomString();
             var responseMessage = new HttpResponseMessage();
@@ -93,19 +94,19 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
         private static Expression<Func<Exception, bool>> SameExceptionAs(Exception expectedException)
         {
             return actualException =>
-                actualException.Message == expectedException.Message &&
-                actualException.InnerException.Message == expectedException.InnerException.Message &&
-                (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
+                actualException.Message == expectedException.Message
+                && actualException.InnerException.Message == expectedException.InnerException.Message
+                && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
 
         private static Filler<Country> CreateCountryFiller()
         {
             var filler = new Filler<Country>();
+
             filler.Setup()
                 .OnType<DateTimeOffset>().Use(GetRandomDateTimeOffset());
 
             return filler;
         }
-
     }
 }

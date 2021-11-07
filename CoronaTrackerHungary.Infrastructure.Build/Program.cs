@@ -3,7 +3,7 @@ using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV1s;
 
-var adotNetClient = new ADotNetClient();
+var aDotNetClient = new ADotNetClient();
 
 var githubPipeline = new GithubPipeline
 {
@@ -65,4 +65,4 @@ var githubPipeline = new GithubPipeline
     }
 };
 
-adotNetClient.SerializeAndWriteToFile(githubPipeline, "../../../../.github/workflows/dotnet.yml");
+aDotNetClient.SerializeAndWriteToFile(githubPipeline, "../../../../.github/workflows/dotnet.yml");

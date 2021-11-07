@@ -41,10 +41,10 @@ namespace CoronaTrackerHungary.Web.Api.Services.Foundations.Countries
             }
             catch (HttpResponseException httpResponseException)
             {
-                var failedCountryException =
+                var failedCountryDependencyException =
                     new FailedCountryDependencyException(httpResponseException);
 
-                throw CreateAndLogDependencyException(failedCountryException);
+                throw CreateAndLogDependencyException(failedCountryDependencyException);
             }
             catch (Exception serviceException)
             {

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using CoronaTrackerHungary.Web.Api.Models.Countries;
 using CoronaTrackerHungary.Web.Api.Models.Countries.Exceptions;
 using Moq;
-using RESTFulSense.Exceptions;
 using Xunit;
 
 namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
@@ -13,7 +11,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
     public partial class CountryServiceTests
     {
         [Theory]
-        [MemberData(nameof(CriticalDependencyException))]
+        [MemberData(nameof(CriticalDependencyExceptions))]
         public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveAllIfCriticalDependencyExceptionOccursAndLogItAsync(
             Exception criticalDependencyException)
         {
@@ -31,12 +29,12 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                 .ThrowsAsync(criticalDependencyException);
 
             // when
-            ValueTask<List<Country>> retrieveAllCountriesTask =
-                this.countryService.RetrieveAllCountrieasAsync();
+            ValueTask<List<Country>> getAllCountriesTask =
+                this.countryService.RetrieveAllCountriesAsync();
 
             // then
             await Assert.ThrowsAsync<CountryDependencyException>(() =>
-                retrieveAllCountriesTask.AsTask());
+                getAllCountriesTask.AsTask());
 
             this.apiBrokerMock.Verify(broker =>
                 broker.GetAllCountriesAsync(),
@@ -52,7 +50,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
         }
 
         [Theory]
-        [MemberData(nameof(DependencyApiException))]
+        [MemberData(nameof(DependencyApiExceptions))]
         public async Task ShouldThrowDependencyExceptionOnRetrieveAllIfDependencyApiErrorOccursAndLogItAsync(
             Exception dependencyApiException)
         {
@@ -68,12 +66,12 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
                 .ThrowsAsync(dependencyApiException);
 
             // when
-            ValueTask<List<Country>> retrieveAllCountriesTask =
-                this.countryService.RetrieveAllCountrieasAsync();
+            ValueTask<List<Country>> getAllCountriesTask =
+                this.countryService.RetrieveAllCountriesAsync();
 
             // then
             await Assert.ThrowsAsync<CountryDependencyException>(() =>
-                retrieveAllCountriesTask.AsTask());
+                getAllCountriesTask.AsTask());
 
             this.apiBrokerMock.Verify(broker =>
                 broker.GetAllCountriesAsync(),
@@ -95,11 +93,11 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
             // given
             var serviceException = new Exception();
 
-            var failedCountryException =
+            var failedCountryServiceException =
                 new FailedCountryServiceException(serviceException);
 
             var expectedCountryServiceException =
-                new CountryServiceException(failedCountryException);
+                new CountryServiceException(failedCountryServiceException);
 
             this.apiBrokerMock.Setup(broker =>
                 broker.GetAllCountriesAsync())
@@ -107,7 +105,7 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 
             // when
             ValueTask<List<Country>> getAllCountriesTask =
-                this.countryService.RetrieveAllCountrieasAsync();
+                this.countryService.RetrieveAllCountriesAsync();
 
             // then
             await Assert.ThrowsAsync<CountryServiceException>(() =>
@@ -119,8 +117,8 @@ namespace CoronaTrackerHungary.Web.Api.Tests.Unit.Services.Foundations.Countries
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                expectedCountryServiceException))),
-                    Times.Once);
+                    expectedCountryServiceException))),
+                        Times.Once);
 
             this.apiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
